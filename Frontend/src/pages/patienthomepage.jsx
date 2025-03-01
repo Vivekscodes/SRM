@@ -1,55 +1,109 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Box, 
   Typography, 
   Paper, 
   Grid, 
   Container,
+  TextField,
+  InputAdornment,
   Avatar,
   IconButton,
   Badge,
   Divider,
-  Chip
+  Chip,
+  Button
 } from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PeopleIcon from '@mui/icons-material/People';
+import PersonIcon from '@mui/icons-material/Person';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { useNavigate } from 'react-router-dom';
 
-const HospitalHomepage = () => {
+const PatientHomepage = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [aiResponse, setAiResponse] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const patientData = {
+    name: "Ananya Desai",
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    notifications: 3,
+    upcomingAppointment: {
+      doctor: "Dr. Rajesh Kumar",
+      specialty: "Cardiologist",
+      date: "Tomorrow, 10:30 AM"
+    }
+  };
+  
   const menuItems = [
     { 
-      id: 'patient', 
-      title: 'PATIENT',
-      subtitle: 'DETAILS',
-      icon: PersonAddIcon,
-      description: "Manage patient records and appointments",
-      count: "150+ patients"
-    },
-    { 
-      id: 'opd', 
-      title: 'OPD',
-      subtitle: '',
+      id: 'viewHospitals', 
+      title: 'VIEW',
+      subtitle: 'HOSPITALS',
       icon: LocalHospitalIcon,
-      color: '#0288d1',
-      description: "Oversee outpatient department activities",
-      count: "50+ daily visits"
+      description: "Find hospitals near you and book appointments",
+      count: "25+ hospitals"
     },
     { 
-      id: 'doctors', 
-      title: 'DOCTORS',
-      subtitle: 'DETAILS',
-      icon: PeopleIcon,
-      description: "Coordinate with medical staff and specialists",
-      count: "30+ doctors"
+      id: 'viewDoctors', 
+      title: 'VIEW',
+      subtitle: 'DOCTORS',
+      icon: PersonIcon,
+      color: '#0288d1',
+      description: "Connect with specialists for your health needs",
+      count: "100+ doctors"
+    },
+    { 
+      id: 'uploadHistory', 
+      title: 'UPLOAD',
+      subtitle: 'MEDICAL HISTORY',
+      icon: UploadFileIcon,
+      description: "Share your medical records securely",
+      count: "Easy sharing"
     }
   ];
 
   const handleItemClick = (itemId) => {
     console.log(`Selected item: ${itemId}`);
-    // Add navigation or other logic here
+    // Add navigation logic based on the selected item
+    switch(itemId) {
+      case 'viewHospitals':
+        // navigate('/patient/hospitals');
+        break;
+      case 'viewDoctors':
+        // navigate('/patient/doctors');
+        break;
+      case 'uploadHistory':
+        // navigate('/patient/upload-history');
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      // Simulate an API call to an AI service
+      const response = await fetch('/api/ai-response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query: searchQuery })
+      });
+      const data = await response.json();
+      setAiResponse(data.response);
+    } catch (error) {
+      console.error('Error fetching AI response:', error);
+      setAiResponse('Sorry, there was an error processing your request.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -93,14 +147,29 @@ const HospitalHomepage = () => {
         
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton sx={{ color: 'white', mr: 1 }}>
-            <Badge badgeContent={4} color="error">
+            <Badge badgeContent={patientData.notifications} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
           
-          <IconButton sx={{ color: 'white' }}>
-            <SettingsIcon />
-          </IconButton>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar 
+              src={patientData.avatar} 
+              alt={patientData.name}
+              sx={{ width: 40, height: 40, border: '2px solid white' }}
+            />
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: 'white', 
+                ml: 1, 
+                display: { xs: 'none', sm: 'block' },
+                fontWeight: 'medium'
+              }}
+            >
+              {patientData.name}
+            </Typography>
+          </Box>
         </Box>
       </Box>
 
@@ -120,17 +189,65 @@ const HospitalHomepage = () => {
           {/* Welcome Message */}
           <Box sx={{ mb: 4, textAlign: 'center' }}>
             <Typography variant="h4" fontWeight="bold" color="#0D47A1">
-              Welcome to MAHI Hospital Management
+              Welcome back, {patientData.name.split(' ')[0]}!
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              Efficiently manage your hospital operations
+              How are you feeling today?
             </Typography>
+          </Box>
+          
+          {/* AI Chat Section */}
+          <Box sx={{ mb: 4, width: '100%', maxWidth: 600, mx: 'auto' }}>
+            <TextField
+              fullWidth
+              placeholder="Explain your problem..."
+              variant="outlined"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                sx: {
+                  borderRadius: 2,
+                  bgcolor: 'white',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  '&:hover': {
+                    bgcolor: 'white',
+                  },
+                  '&.Mui-focused': {
+                    bgcolor: 'white',
+                  }
+                }
+              }}
+            />
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleSearch} 
+              sx={{ mt: 2, width: '100%' }}
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : 'Submit'}
+            </Button>
+            {aiResponse && (
+              <Paper 
+                elevation={0} 
+                sx={{ mt: 2, p: 2, bgcolor: 'rgba(255, 255, 255, 0.8)', borderRadius: 2 }}
+              >
+                <Typography variant="body1" color="text.primary">
+                  {aiResponse}
+                </Typography>
+              </Paper>
+            )}
           </Box>
 
           {/* Section Title */}
           <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
             <Typography variant="h5" fontWeight="bold" color="#0D47A1">
-              Dashboard
+              Services
             </Typography>
             <Divider sx={{ flexGrow: 1, ml: 2 }} />
           </Box>
@@ -244,4 +361,4 @@ const HospitalHomepage = () => {
   );
 };
 
-export default HospitalHomepage;
+export default PatientHomepage;

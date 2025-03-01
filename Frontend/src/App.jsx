@@ -12,6 +12,7 @@ import LoginDoctor from "./pages/logindoctor";
 import LoginHospital from "./pages/loginhospital";
 import Patientdetails from "./pages/patientdetails";
 import PatientFullDetails from "./pages/patientfulldetails";
+import PatientHomepage from "./pages/patienthomepage";
 
 
 
@@ -45,6 +46,8 @@ const App = () => {
 
 
         <Route path="/doctorhomepage" element={<DoctorHomepage />} />
+
+		<Route path="/patienthomepage" element={<PatientHomepage />} />
 
 		<Route path="/patientdetails" element={<Patientdetails />} />
 
