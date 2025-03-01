@@ -14,7 +14,11 @@ import Patientdetails from "./pages/patientdetails";
 import PatientFullDetails from "./pages/patientfulldetails";
 //import opd from "./pages/opd";
 import OPDList from "./pages/opd";
-
+import PatientHomepage from "./pages/patienthomepage";
+import DoctorListPage from "./pages/doctorsdetails";
+import DoctorsFullDetails from "./pages/doctorsfulldetails";
+import PatientQueue from "./pages/patientqueue";
+import ViewPreviousCasesOfDoctors from "./pages/viewPreviousCasesOfDoctors";
 
 const App = () => {
   return (
@@ -47,12 +51,21 @@ const App = () => {
 
         <Route path="/doctorhomepage" element={<DoctorHomepage />} />
 
+		<Route path="/patienthomepage" element={<PatientHomepage />} />
+
 		<Route path="/patientdetails" element={<Patientdetails />} />
 
 		<Route path="/patientfulldetails" element={<PatientFullDetails />} />
 
     <Route path="/viewopd" element={<OPDList />} />
 
+		<Route path="/doctorsdetails" element={<DoctorListPage />} />
+
+		<Route path="/doctorsfulldetails" element={<DoctorsFullDetails />} />
+
+		<Route path="/patientqueue" element={<PatientQueue />} />
+
+		<Route path="/viewPreviousCasesOfDoctors" element={<ViewPreviousCasesOfDoctors />} />
         
         
         <Route path="*" element={<Navigate to="/welcome" replace />} />

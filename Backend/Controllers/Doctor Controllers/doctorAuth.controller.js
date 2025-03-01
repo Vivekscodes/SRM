@@ -110,9 +110,9 @@ export const doctorRegister = async (req, res) => {
 
 			if (newDoctor) {
 				generateDocToken(newDoctor._id, res);
-
+				
 				await newDoctor.save();
-
+				
 				res.status(201).json({
 					_id: newDoctor._id,
 					fullname: newDoctor.fullname,
