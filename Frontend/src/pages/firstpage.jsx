@@ -77,7 +77,7 @@ const FirstPage = () => {
             color: 'black'
           }}
         >
-          SIGN IN AS
+          SIGN UP AS
         </Typography>
 
         <Grid 
