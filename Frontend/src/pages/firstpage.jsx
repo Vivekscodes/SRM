@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Box, 
@@ -49,7 +48,7 @@ const FirstPage = () => {
   ];
 
   const handleUserTypeClick = (userType) => {
-    console.log(`Selected user type: ${userType.id}`);
+    console.log(`Selected userType: ${userType.id}`);
     navigate(userType.path);
   };
 
