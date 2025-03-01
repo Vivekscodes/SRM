@@ -8,7 +8,7 @@ console.log("API_KEY:", API_KEY);
 
 export async function agent(prompt) {
 	try {
-        console.log("Prompt:", prompt);
+        // console.log("Prompt:", prompt);
 		const genAI = new GoogleGenerativeAI(API_KEY);
 		const model = genAI.getGenerativeModel({
 			model: "gemini-2.0-flash-exp",
@@ -22,7 +22,7 @@ You received data in form of json where message part will include query and doct
 		const result = await model.generateContent(fullPrompt);
 		const response = await result.response.text();
 
-		console.log("Gemini Response:", response);
+		// console.log("Gemini Response:", response);
 		return response;
 	} catch (error) {
 		console.error("Error:", error.message);

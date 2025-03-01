@@ -15,13 +15,21 @@ export const chat = async (req, res) => {
             return res.status(404).json({ message: "No doctors found" });
         }
 
-        const prompt = JSON.stringify({ message: query, doctors });
+        const doctorIds = doctors.map((doctor) => ({
+            _id: doctor._id,
+            medical_expertise: doctor.medical_expertise,
+            experience: doctor.experience
+        }));
+
+        // console.log("Doctors:", doctorIds);
+
+        const prompt = JSON.stringify({ message: query, doctorIds });
 
         const response = await agent(prompt);
 
         const resp = response.split("```json")[1].split("```")[0];
 
-        console.log("Response:", resp);
+        // console.log("Response:", resp);
 
         return res.status(200).json(JSON.parse(resp));
     } catch (error) {
