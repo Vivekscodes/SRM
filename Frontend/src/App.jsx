@@ -11,6 +11,7 @@ import LoginUser from "./pages/loginuser";
 import LoginDoctor from "./pages/logindoctor";
 import LoginHospital from "./pages/loginhospital";
 import Patientdetails from "./pages/patientdetails";
+import PatientFullDetails from "./pages/patientfulldetails";
 
 
 
@@ -46,6 +47,8 @@ const App = () => {
         <Route path="/doctorhomepage" element={<DoctorHomepage />} />
 
 		<Route path="/patientdetails" element={<Patientdetails />} />
+
+		<Route path="/patientfulldetails" element={<PatientFullDetails />} />
         
         
         <Route path="*" element={<Navigate to="/welcome" replace />} />
