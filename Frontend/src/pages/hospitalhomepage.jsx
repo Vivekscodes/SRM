@@ -14,11 +14,13 @@ import {
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import PeopleIcon from '@mui/icons-material/People';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useNavigate } from 'react-router-dom';
 
 const HospitalHomepage = () => {
+  const navigate = useNavigate();
+
   const menuItems = [
     { 
       id: 'patient', 
@@ -26,7 +28,8 @@ const HospitalHomepage = () => {
       subtitle: 'DETAILS',
       icon: PersonAddIcon,
       description: "Manage patient records and appointments",
-      count: "150+ patients"
+      count: "150+ patients",
+      path: '/patientdetails'
     },
     { 
       id: 'opd', 
@@ -35,7 +38,8 @@ const HospitalHomepage = () => {
       icon: LocalHospitalIcon,
       color: '#0288d1',
       description: "Oversee outpatient department activities",
-      count: "50+ daily visits"
+      count: "50+ daily visits",
+      path: '/viewopd'
     },
     { 
       id: 'doctors', 
@@ -43,13 +47,16 @@ const HospitalHomepage = () => {
       subtitle: 'DETAILS',
       icon: PeopleIcon,
       description: "Coordinate with medical staff and specialists",
-      count: "30+ doctors"
+      count: "30+ doctors",
+      path: '/doctorsdetails'
     }
   ];
 
-  const handleItemClick = (itemId) => {
+  const handleItemClick = (itemId, path) => {
     console.log(`Selected item: ${itemId}`);
-    // Add navigation or other logic here
+    if (path) {
+      navigate(path);
+    }
   };
 
   return (
@@ -61,6 +68,8 @@ const HospitalHomepage = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        background: 'linear-gradient(135deg, #B0E2FE 30%, #2196f3 90%)',
+        padding: '20px'
       }}
     >
       {/* Header */}
@@ -74,30 +83,26 @@ const HospitalHomepage = () => {
           alignItems: 'center',
           borderBottomLeftRadius: 15,
           borderBottomRightRadius: 15,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
         }}
       >
         <Typography
-          variant="h5"
+          variant="h4"
           component="h1"
           sx={{
             fontWeight: 'bold',
             color: 'white',
-            ml: 1,
-            display: 'flex',
-            alignItems: 'center'
+            ml: 1
           }}
         >
           <LocalHospitalIcon sx={{ mr: 1 }} /> MAHI
         </Typography>
-        
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton sx={{ color: 'white', mr: 1 }}>
             <Badge badgeContent={4} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          
           <IconButton sx={{ color: 'white' }}>
             <SettingsIcon />
           </IconButton>
@@ -145,26 +150,25 @@ const HospitalHomepage = () => {
             {menuItems.map((item) => (
               <Grid item xs={12} sm={4} key={item.id}>
                 <Paper
-                  elevation={0}
-                  onClick={() => handleItemClick(item.id)}
+                  elevation={3}
+                  onClick={() => handleItemClick(item.id, item.path)}
                   sx={{
-                    bgcolor: 'rgba(247, 241, 241, 0.7)',
+                    bgcolor: 'rgba(255, 255, 255, 0.8)',
                     borderRadius: 2,
-                    p: 3,
-                    height: '100%',
+                    p: 4,
+                    height: 240,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
-                    transition: 'all 0.2s',
+                    transition: 'all 0.3s',
                     margin: '0 auto',
-                    border: '1px solid rgba(0, 0, 0, 0.05)',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     '&:hover': {
-                      bgcolor: 'rgba(247, 241, 241, 0.9)',
-                      transform: 'translateY(-5px)',
-                      boxShadow: '0 8px 16px rgba(0,0,0,0.1)'
+                      bgcolor: 'rgba(255, 255, 255, 0.9)',
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)'
                     }
                   }}
                 >
@@ -173,18 +177,13 @@ const HospitalHomepage = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      mb: 2,
-                      p: 2,
-                      bgcolor: 'rgba(255, 255, 255, 0.7)',
-                      borderRadius: '50%',
-                      width: 100,
-                      height: 100
+                      mb: 3
                     }}
                   >
                     <item.icon 
                       sx={{ 
-                        fontSize: 60,
-                        color: item.color || '#0288d1'
+                        fontSize: 90,
+                        color: item.color || '#2196f3'
                       }} 
                     />
                   </Box>
@@ -208,14 +207,12 @@ const HospitalHomepage = () => {
                       sx={{
                         color: '#0288d1',
                         fontWeight: 'bold',
-                        lineHeight: 1.2,
-                        mb: 2
+                        lineHeight: 1.2
                       }}
                     >
                       {item.subtitle}
                     </Typography>
                   )}
-                  
                   <Typography 
                     variant="body2" 
                     align="center" 
@@ -224,7 +221,6 @@ const HospitalHomepage = () => {
                   >
                     {item.description}
                   </Typography>
-                  
                   <Chip 
                     label={item.count} 
                     size="small" 

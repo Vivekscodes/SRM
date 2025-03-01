@@ -20,23 +20,23 @@ import SearchIcon from '@mui/icons-material/Search';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
 
-// Sample patient data
-const samplePatients = [
-  { id: 1, name: 'Rahul Sharma', age: 45, gender: 'Male', condition: 'Hypertension' },
-  { id: 2, name: 'Priya Patel', age: 32, gender: 'Female', condition: 'Diabetes' },
-  { id: 3, name: 'Amit Kumar', age: 28, gender: 'Male', condition: 'Asthma' },
-  { id: 4, name: 'Sneha Gupta', age: 56, gender: 'Female', condition: 'Arthritis' },
-  { id: 5, name: 'Vikram Singh', age: 39, gender: 'Male', condition: 'Migraine' },
-  { id: 6, name: 'Neha Reddy', age: 42, gender: 'Female', condition: 'Thyroid' },
-  { id: 7, name: 'Rajesh Verma', age: 51, gender: 'Male', condition: 'Heart Disease' },
-  { id: 8, name: 'Ananya Desai', age: 24, gender: 'Female', condition: 'Anemia' },
-  { id: 9, name: 'Suresh Joshi', age: 63, gender: 'Male', condition: 'Diabetes' },
-  { id: 10, name: 'Meera Kapoor', age: 37, gender: 'Female', condition: 'Allergies' },
-  { id: 11, name: 'Deepak Malhotra', age: 48, gender: 'Male', condition: 'Back Pain' },
-  { id: 12, name: 'Kavita Sharma', age: 29, gender: 'Female', condition: 'Pregnancy' },
+// Sample doctor data
+const sampleDoctors = [
+  { id: 1, name: 'Dr. Rahul Sharma', age: 45, gender: 'Male', specialty: 'Cardiology' },
+  { id: 2, name: 'Dr. Priya Patel', age: 32, gender: 'Female', specialty: 'Neurology' },
+  { id: 3, name: 'Dr. Amit Kumar', age: 28, gender: 'Male', specialty: 'Orthopedics' },
+  { id: 4, name: 'Dr. Sneha Gupta', age: 56, gender: 'Female', specialty: 'Pediatrics' },
+  { id: 5, name: 'Dr. Vikram Singh', age: 39, gender: 'Male', specialty: 'Dermatology' },
+  { id: 6, name: 'Dr. Neha Reddy', age: 42, gender: 'Female', specialty: 'Gynecology' },
+  { id: 7, name: 'Dr. Rajesh Verma', age: 51, gender: 'Male', specialty: 'Cardiology' },
+  { id: 8, name: 'Dr. Ananya Desai', age: 24, gender: 'Female', specialty: 'Endocrinology' },
+  { id: 9, name: 'Dr. Suresh Joshi', age: 63, gender: 'Male', specialty: 'Gastroenterology' },
+  { id: 10, name: 'Dr. Meera Kapoor', age: 37, gender: 'Female', specialty: 'Ophthalmology' },
+  { id: 11, name: 'Dr. Deepak Malhotra', age: 48, gender: 'Male', specialty: 'Psychiatry' },
+  { id: 12, name: 'Dr. Kavita Sharma', age: 29, gender: 'Female', specialty: 'Radiology' },
 ];
 
-const PatientListPage = () => {
+const DoctorsListPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -53,18 +53,18 @@ const PatientListPage = () => {
     setPage(0);
   };
 
-  // Handle view patient details
-  const handleViewPatient = (patientId) => {
-    navigate(`/patientfulldetails/${patientId}`);
+  // Handle view doctor details
+  const handleViewDoctor = (doctorId) => {
+    navigate(`/doctorfulldetails/${doctorId}`);
   };
 
-  // Filter patients based on search term
-  const filteredPatients = samplePatients.filter(patient => 
-    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter doctors based on search term
+  const filteredDoctors = sampleDoctors.filter(doctor => 
+    doctor.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Get current page patients
-  const currentPatients = filteredPatients.slice(
+  // Get current page doctors
+  const currentDoctors = filteredDoctors.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -101,7 +101,7 @@ const PatientListPage = () => {
           }}
         >
           <Typography variant="h5" component="h2" sx={{ mb: 2, fontWeight: 'bold' }}>
-            Patient List
+            Doctor List
           </Typography>
           
           {/* Search Bar */}
@@ -118,7 +118,7 @@ const PatientListPage = () => {
           >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Search patients by name"
+              placeholder="Search doctors by name"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -127,31 +127,31 @@ const PatientListPage = () => {
             </IconButton>
           </Paper>
 
-          {/* Patient Table */}
+          {/* Doctor Table */}
           <TableContainer component={Paper} sx={{ borderRadius: 2, mb: 2 }}>
             <Table>
               <TableHead sx={{ bgcolor: '#e3f2fd' }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold' }}>Patient Name</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Doctor Name</TableCell>
                   <TableCell sx={{ fontWeight: 'bold' }}>Age</TableCell>
                   <TableCell sx={{ fontWeight: 'bold' }}>Gender</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold' }}>Condition</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Specialty</TableCell>
                   <TableCell align="right" sx={{ fontWeight: 'bold' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {currentPatients.map((patient) => (
-                  <TableRow key={patient.id} hover>
-                    <TableCell>{patient.name}</TableCell>
-                    <TableCell>{patient.age}</TableCell>
-                    <TableCell>{patient.gender}</TableCell>
-                    <TableCell>{patient.condition}</TableCell>
+                {currentDoctors.map((doctor) => (
+                  <TableRow key={doctor.id} hover>
+                    <TableCell>{doctor.name}</TableCell>
+                    <TableCell>{doctor.age}</TableCell>
+                    <TableCell>{doctor.gender}</TableCell>
+                    <TableCell>{doctor.specialty}</TableCell>
                     <TableCell align="right">
                       <Button
                         variant="contained"
                         size="small"
                         startIcon={<VisibilityIcon />}
-                        onClick={() => handleViewPatient(patient.id)}
+                        onClick={() => handleViewDoctor(doctor.id)}
                         sx={{ 
                           bgcolor: '#0288D1',
                           borderRadius: 2,
@@ -173,7 +173,7 @@ const PatientListPage = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={filteredPatients.length}
+            count={filteredDoctors.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -185,4 +185,4 @@ const PatientListPage = () => {
   );
 };
 
-export default PatientListPage;
+export default DoctorsListPage;

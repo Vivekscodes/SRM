@@ -1,3 +1,5 @@
+//will be linked with doctorshomepage
+
 import React, { useState } from 'react';
 import { 
   Box, 
@@ -9,7 +11,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
   TablePagination,
   AppBar,
   Toolbar,
@@ -17,7 +18,6 @@ import {
   IconButton
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
 
 // Sample patient data
@@ -36,7 +36,7 @@ const samplePatients = [
   { id: 12, name: 'Kavita Sharma', age: 29, gender: 'Female', condition: 'Pregnancy' },
 ];
 
-const PatientListPage = () => {
+const PatientQueue = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -51,11 +51,6 @@ const PatientListPage = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  // Handle view patient details
-  const handleViewPatient = (patientId) => {
-    navigate(`/patientfulldetails/${patientId}`);
   };
 
   // Filter patients based on search term
@@ -101,7 +96,7 @@ const PatientListPage = () => {
           }}
         >
           <Typography variant="h5" component="h2" sx={{ mb: 2, fontWeight: 'bold' }}>
-            Patient List
+            Patient Queue
           </Typography>
           
           {/* Search Bar */}
@@ -136,7 +131,6 @@ const PatientListPage = () => {
                   <TableCell sx={{ fontWeight: 'bold' }}>Age</TableCell>
                   <TableCell sx={{ fontWeight: 'bold' }}>Gender</TableCell>
                   <TableCell sx={{ fontWeight: 'bold' }}>Condition</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 'bold' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -146,23 +140,6 @@ const PatientListPage = () => {
                     <TableCell>{patient.age}</TableCell>
                     <TableCell>{patient.gender}</TableCell>
                     <TableCell>{patient.condition}</TableCell>
-                    <TableCell align="right">
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => handleViewPatient(patient.id)}
-                        sx={{ 
-                          bgcolor: '#0288D1',
-                          borderRadius: 2,
-                          '&:hover': {
-                            bgcolor: '#01579b'
-                          }
-                        }}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -185,4 +162,4 @@ const PatientListPage = () => {
   );
 };
 
-export default PatientListPage;
+export default PatientQueue;
