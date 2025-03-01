@@ -19,8 +19,11 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import StarIcon from '@mui/icons-material/Star';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { useNavigate } from 'react-router-dom';
 
 const DoctorHomepage = () => {
+  const navigate = useNavigate();
+
   // Doctor profile data
   const doctorProfile = {
     name: 'Dr. Sarah Johnson',
@@ -42,7 +45,8 @@ const DoctorHomepage = () => {
       icon: PeopleAltIcon,
       color: '#1976d2',
       gradient: 'linear-gradient(45deg, #2196f3 30%, #21CBF3 90%)',
-      count: 12
+      count: 12,
+      path: '/patientqueue'
     },
     { 
       id: 'viewHistory', 
@@ -51,7 +55,8 @@ const DoctorHomepage = () => {
       icon: HistoryIcon,
       color: '#0288d1',
       gradient: 'linear-gradient(45deg, #0288d1 30%, #26C6DA 90%)',
-      count: 45
+      count: 45,
+      path: '/viewPreviousCasesOfDoctors'
     },
     { 
       id: 'addCases', 
@@ -60,13 +65,16 @@ const DoctorHomepage = () => {
       icon: AddCircleIcon,
       color: '#00838f',
       gradient: 'linear-gradient(45deg, #00838f 30%, #00BCD4 90%)',
-      count: null
+      count: null,
+      path: null
     }
   ];
 
-  const handleItemClick = (itemId) => {
+  const handleItemClick = (itemId, path) => {
     console.log(`Selected item: ${itemId}`);
-    // Add navigation or other logic here
+    if (path) {
+      navigate(path);
+    }
   };
 
   return (
@@ -223,7 +231,7 @@ const DoctorHomepage = () => {
             <Grid item xs={12} sm={6} md={4} key={item.id}>
               <Paper
                 elevation={3}
-                onClick={() => handleItemClick(item.id)}
+                onClick={() => handleItemClick(item.id, item.path)}
                 sx={{
                   borderRadius: 3,
                   height: 240,

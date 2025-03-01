@@ -13,6 +13,10 @@ import LoginHospital from "./pages/loginhospital";
 import Patientdetails from "./pages/patientdetails";
 import PatientFullDetails from "./pages/patientfulldetails";
 import PatientHomepage from "./pages/patienthomepage";
+import DoctorListPage from "./pages/doctorsdetails";
+import DoctorsFullDetails from "./pages/doctorsfulldetails";
+import PatientQueue from "./pages/patientqueue";
+import ViewPreviousCasesOfDoctors from "./pages/viewPreviousCasesOfDoctors";
 
 
 
@@ -52,6 +56,14 @@ const App = () => {
 		<Route path="/patientdetails" element={<Patientdetails />} />
 
 		<Route path="/patientfulldetails" element={<PatientFullDetails />} />
+
+		<Route path="/doctorsdetails" element={<DoctorListPage />} />
+
+		<Route path="/doctorsfulldetails" element={<DoctorsFullDetails />} />
+
+		<Route path="/patientqueue" element={<PatientQueue />} />
+
+		<Route path="/viewPreviousCasesOfDoctors" element={<ViewPreviousCasesOfDoctors />} />
         
         
         <Route path="*" element={<Navigate to="/welcome" replace />} />

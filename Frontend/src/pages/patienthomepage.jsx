@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Box, 
   Typography, 
@@ -27,6 +27,7 @@ const PatientHomepage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [aiResponse, setAiResponse] = useState('');
   const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef(null);
 
   const patientData = {
     name: "Ananya Desai",
@@ -69,19 +70,28 @@ const PatientHomepage = () => {
 
   const handleItemClick = (itemId) => {
     console.log(`Selected item: ${itemId}`);
-    // Add navigation logic based on the selected item
-    switch(itemId) {
-      case 'viewHospitals':
-        // navigate('/patient/hospitals');
-        break;
-      case 'viewDoctors':
-        // navigate('/patient/doctors');
-        break;
-      case 'uploadHistory':
-        // navigate('/patient/upload-history');
-        break;
-      default:
-        break;
+    if (itemId === 'uploadHistory') {
+      fileInputRef.current.click();
+    } else {
+      // Add navigation logic based on the selected item
+      switch(itemId) {
+        case 'viewHospitals':
+          // navigate('/patient/hospitals');
+          break;
+        case 'viewDoctors':
+          // navigate('/patient/doctors');
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('Selected file:', file);
+      // Add your file upload logic here
     }
   };
 
@@ -357,6 +367,14 @@ const PatientHomepage = () => {
           </Grid>
         </Container>
       </Box>
+
+      {/* Hidden File Input */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
     </Box>
   );
 };
