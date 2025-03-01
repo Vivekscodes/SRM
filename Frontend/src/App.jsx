@@ -12,13 +12,13 @@ import LoginDoctor from "./pages/logindoctor";
 import LoginHospital from "./pages/loginhospital";
 import Patientdetails from "./pages/patientdetails";
 import PatientFullDetails from "./pages/patientfulldetails";
+//import opd from "./pages/opd";
+import OPDList from "./pages/opd";
 import PatientHomepage from "./pages/patienthomepage";
 import DoctorListPage from "./pages/doctorsdetails";
 import DoctorsFullDetails from "./pages/doctorsfulldetails";
 import PatientQueue from "./pages/patientqueue";
 import ViewPreviousCasesOfDoctors from "./pages/viewPreviousCasesOfDoctors";
-
-
 
 const App = () => {
   return (
@@ -56,6 +56,8 @@ const App = () => {
 		<Route path="/patientdetails" element={<Patientdetails />} />
 
 		<Route path="/patientfulldetails" element={<PatientFullDetails />} />
+
+    <Route path="/viewopd" element={<OPDList />} />
 
 		<Route path="/doctorsdetails" element={<DoctorListPage />} />
 
