@@ -1,11 +1,11 @@
-//Packages
-import express from 'express';
+```typescript
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
 
-// DataBase
+// Database connection
 import connectDB from './Database/connect.js';
 
 // Routers
@@ -15,32 +15,34 @@ import hospitalRouter from './Routers/hospital.routes.js';
 import userRoute from './Routers/user.routes.js';
 import doctorRoute from './Routers/doctor.routes.js';
 
-dotenv.config({path: '../.env'});
+// Load environment variables from .env file
+dotenv.config({ path: '../.env' });
 
-const Port = process.env.PORT || 8000
+// Define the port for the server, using the environment variable or a default value
+const port: number | string = process.env.PORT || '8000'; // Specify type as number or string
 
 const app = express();
 
-app.listen(Port,()=>{
-    connectDB();
-    console.log(`Server is running at http://localhost:${Port}`)
-})
+// Middleware setup
+app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(express.json()); // Parse JSON request bodies
+app.use(cookieParser()); // Parse cookies
 
-app.get('/',(req,res)=>{
-    res.send("Hello World");
+// Define routes
+app.use('/api/auth', authRouter); // Authentication routes
+app.use('/api/profile', profileRouter); // User profile routes
+app.use('/api/hospital', hospitalRouter); // Hospital routes
+app.use('/api/user', userRoute); // User routes.  Removed trailing slash for consistency and best practice
+app.use('/api/doctor', doctorRoute); // Doctor routes. Removed trailing slash for consistency and best practice
+
+// Basic route for testing
+app.get('/', (req: Request, res: Response) => {
+    res.send('Hello World');
 });
 
-app.use(cors());
-
-app.use(express.json());
-app.use(cookieParser());
-
-app.use('/api/auth',authRouter);
-app.use('/api/profile',profileRouter);
-
-app.use('/api/hospital', hospitalRouter);
-app.use('/api/user/', userRoute);
-app.use('/api/doctor/', doctorRoute);
-// app.get('*',(req,res)=>{
-//     res.send('Invalid Domain');
-// });
+// Start the server
+app.listen(port, () => {
+    connectDB();
+    console.log(`Server is running at http://localhost:${port}`);
+});
+```
